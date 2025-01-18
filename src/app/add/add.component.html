@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nhập thông tin cá nhân</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Nhập thông tin cá nhân</h1>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="id">ID:</label>
+          <input type="text" id="id" name="id" required />
+        </div>
+        <div class="form-group">
+          <label for="hoTen">Họ tên:</label>
+          <input type="text" id="hoTen" name="hoTen" required />
+        </div>
+        <div class="form-group">
+          <label for="ngaySinh">Ngày sinh:</label>
+          <input type="date" id="ngaySinh" name="ngaySinh" required />
+        </div>
+        <div class="form-group">
+          <label for="gioiTinh">Giới tính:</label>
+          <select id="gioiTinh" name="gioiTinh" required>
+            <option value="Nam" selected>Nam</option>
+            <option value="Nữ">Nữ</option>
+            <option value="Khác">Khác</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="diaChi">Địa Chỉ:</label>
+          <select id="diaChi" name="diaChi" required>
+            <option value="Hà Nội" selected>Hà Nội</option>
+            <option value="Nam Định">Nam Định</option>
+            <option value="Thái Bình">Thái Bình</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="fbWeb">Facebook/Trang web cá nhân:</label>
+          <input type="url" id="fbWeb" name="fbWeb" required />
+        </div>
+        <button type="submit">Gửi</button>
+      </form>
+    </div>
+  </body>
+</html>
