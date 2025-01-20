@@ -6,13 +6,14 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add.component.html',
   styleUrl: './add.component.css',
 })
 export class AddComponent implements OnInit {
   form!: FormGroup;
-  // filteredOptions: Observable<string[]>;
+
   constructor(private fb: FormBuilder) {
     //fb tạo ra các from control ,addressService lấy dữ liệu
     this.form = this.fb.group({
@@ -22,7 +23,8 @@ export class AddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.jsonArrayData = this.getDataFromLocalStorage();
+    const data = this.getDataFromLocalStorage();
+    this.jsonArrayData = data ? data : [];
   }
 
   // Lưu dữ liệu vào localStorage
@@ -30,16 +32,20 @@ export class AddComponent implements OnInit {
     const jsonData = JSON.stringify(data);
     localStorage.setItem('personalData', jsonData);
   }
+
   //Lấy dữ liệu từ localStorage
 
   jsonArrayData: Add[] = [];
-  // Đọc dữ liệu từ localStorage
-  getDataFromLocalStorage(): any {
+
+  getDataFromLocalStorage(): Add[] {
     const jsonData = localStorage.getItem('personalData');
     if (jsonData) {
-      return JSON.parse(jsonData);
+      const parsedData = JSON.parse(jsonData);
+      if (Array.isArray(parsedData)) {
+        return parsedData;
+      }
     }
-    return null;
+    return [];
   }
 
   // Lưu dữ liệu vào file JSON
@@ -53,11 +59,18 @@ export class AddComponent implements OnInit {
   //   a.click();
   //   window.URL.revokeObjectURL(url);
   // }
-
+  getId(): number {
+    const data = localStorage.getItem('personalData');
+    if (data) {
+      const kq = JSON.parse(data);
+      return kq.length + 1;
+    }
+    return 1;
+  }
   onSubmit() {
     if (this.form.valid) {
       const formData = {
-        id: (document.getElementById('id') as HTMLInputElement).value,
+        id: this.getId(),
         hoTen: (document.getElementById('hoTen') as HTMLInputElement).value,
         ngaySinh: (document.getElementById('ngaySinh') as HTMLInputElement)
           .value,
@@ -66,10 +79,8 @@ export class AddComponent implements OnInit {
         diaChi: (document.getElementById('diaChi') as HTMLSelectElement).value,
         fbWeb: (document.getElementById('fbWeb') as HTMLInputElement).value,
       };
-
-      this.saveDataToLocalStrorage(formData);
-      const retrievedData = this.getDataFromLocalStorage();
-      this.jsonArrayData.push(retrievedData);
+      this.jsonArrayData.push(formData);
+      this.saveDataToLocalStrorage(this.jsonArrayData);
       console.log('Retrieved Data:', this.jsonArrayData);
       this.saveDataToLocalStrorage(this.jsonArrayData);
       //this.savaJsonToFile(retrievedData, 'danhSach.json');

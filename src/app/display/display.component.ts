@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-
+import { Router } from '@angular/router'; // Import Router để điều hướng
 @Component({
   selector: 'app-display',
   imports: [CommonModule],
@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 })
 export class DisplayComponent {
   personalData: any[] = [];
-  constructor() {}
+  constructor(private router: Router) {}
   ngOnInit() {
     this.loadData();
   }
@@ -27,5 +27,8 @@ export class DisplayComponent {
       );
       localStorage.setItem('personalData', JSON.stringify(this.personalData));
     }
+  }
+  goToEditComponent() {
+    this.router.navigate(['/edit']); // Điều hướng đến route '/edit'
   }
 }

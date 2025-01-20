@@ -1,5 +1,5 @@
 export class Add {
-  id: string;
+  id: number;
   hoTen: string;
   ngaySinh: string;
   gioiTinh: string;
@@ -7,7 +7,7 @@ export class Add {
   fbWeb: string;
 
   constructor(
-    id: string,
+    id: number,
     hoTen: string,
     ngaySinh: string,
     gioiTinh: string,
