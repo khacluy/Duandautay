@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './add.component.css',
 })
 export class AddComponent implements OnInit {
+
   form!: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -32,7 +33,11 @@ export class AddComponent implements OnInit {
     const jsonData = JSON.stringify(data);
     localStorage.setItem('personalData', jsonData);
   }
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> fd66f01409ec6661beb2af5cb9c45a70de1640e3
   //Lấy dữ liệu từ localStorage
 
   jsonArrayData: Add[] = [];
@@ -41,9 +46,13 @@ export class AddComponent implements OnInit {
     const jsonData = localStorage.getItem('personalData');
     if (jsonData) {
       const parsedData = JSON.parse(jsonData);
+<<<<<<< HEAD
       if (Array.isArray(parsedData)) {
         return parsedData;
       }
+=======
+      if (Array.isArray(parsedData)) { return parsedData;}
+>>>>>>> fd66f01409ec6661beb2af5cb9c45a70de1640e3
     }
     return [];
   }
@@ -72,10 +81,8 @@ export class AddComponent implements OnInit {
       const formData = {
         id: this.getId(),
         hoTen: (document.getElementById('hoTen') as HTMLInputElement).value,
-        ngaySinh: (document.getElementById('ngaySinh') as HTMLInputElement)
-          .value,
-        gioiTinh: (document.getElementById('gioiTinh') as HTMLSelectElement)
-          .value,
+        ngaySinh: (document.getElementById('ngaySinh') as HTMLInputElement).value,
+        gioiTinh: (document.getElementById('gioiTinh') as HTMLSelectElement).value,
         diaChi: (document.getElementById('diaChi') as HTMLSelectElement).value,
         fbWeb: (document.getElementById('fbWeb') as HTMLInputElement).value,
       };
@@ -87,3 +94,4 @@ export class AddComponent implements OnInit {
     }
   }
 }
+
