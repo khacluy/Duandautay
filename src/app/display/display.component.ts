@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router'; // Import Router để điều hướng
+import { EditComponent } from '../edit/edit.component';
 @Component({
   selector: 'app-display',
   imports: [CommonModule],
@@ -9,7 +10,7 @@ import { Component } from '@angular/core';
 })
 export class DisplayComponent {
   personalData: any[] = [];
-  constructor() {}
+  constructor(private router: Router) {}
   ngOnInit() {
     this.loadData();
   }
@@ -27,5 +28,8 @@ export class DisplayComponent {
       );
       localStorage.setItem('personalData', JSON.stringify(this.personalData));
     }
+  }
+  goToEditComponent(id: number) {  
+    this.router.navigate(['/edit',id]); // Điều hướng đến route '/edit'
   }
 }

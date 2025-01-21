@@ -1,13 +1,13 @@
 export class Add {
-  id: string;
-  hoTen: string;
-  ngaySinh: string;
-  gioiTinh: string;
-  diaChi: string;
+  id: number; 
+  hoTen: string; 
+  ngaySinh: string; 
+  gioiTinh: string; 
+  diaChi: string; 
   fbWeb: string;
 
   constructor(
-    id: string,
+    id: number,
     hoTen: string,
     ngaySinh: string,
     gioiTinh: string,

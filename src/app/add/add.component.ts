@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Add } from '../../../model/add.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule],
   templateUrl: './add.component.html',
   styleUrl: './add.component.css',
 })
-export class AddComponent implements OnInit {
+export class AddComponent implements OnInit, OnDestroy {
 
   form!: FormGroup;
 
@@ -26,6 +26,18 @@ export class AddComponent implements OnInit {
   ngOnInit(): void {
     const data = this.getDataFromLocalStorage();
     this.jsonArrayData = data ? data : [];
+    // Check rỗng
+    this.form = this.fb.group({
+      id: ['', Validators.required],
+      hoTen: ['', Validators.required],
+      ngaySinh: ['', Validators.required],
+      gioiTinh: ['', Validators.required],
+      diaChi: ['', Validators.required],
+      fbWeb: ['', [Validators.required, Validators.pattern('https?://.+')]]
+    });
+  }
+  ngOnDestroy(): void {
+    // Thực hiện các thao tác dọn dẹp nếu cần
   }
 
   // Lưu dữ liệu vào localStorage
@@ -33,7 +45,7 @@ export class AddComponent implements OnInit {
     const jsonData = JSON.stringify(data);
     localStorage.setItem('personalData', jsonData);
   }
-  
+
   //Lấy dữ liệu từ localStorage
 
   jsonArrayData: Add[] = [];
@@ -42,7 +54,7 @@ export class AddComponent implements OnInit {
     const jsonData = localStorage.getItem('personalData');
     if (jsonData) {
       const parsedData = JSON.parse(jsonData);
-      if (Array.isArray(parsedData)) { return parsedData;}
+      if (Array.isArray(parsedData)) { return parsedData; }
     }
     return [];
   }
@@ -59,10 +71,19 @@ export class AddComponent implements OnInit {
   //   window.URL.revokeObjectURL(url);
   // }
 
+  private markAllAsTouched(formGroup: FormGroup = this.form): void {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+      if (control instanceof FormGroup) {
+        this.markAllAsTouched(control);
+      }
+    });
+  }
+  
   onSubmit() {
     if (this.form.valid) {
       const formData = {
-        id: (document.getElementById('id') as HTMLInputElement).value,
+        id: +(document.getElementById('id') as HTMLInputElement).value,
         hoTen: (document.getElementById('hoTen') as HTMLInputElement).value,
         ngaySinh: (document.getElementById('ngaySinh') as HTMLInputElement).value,
         gioiTinh: (document.getElementById('gioiTinh') as HTMLSelectElement).value,
@@ -74,6 +95,8 @@ export class AddComponent implements OnInit {
       console.log('Retrieved Data:', this.jsonArrayData);
       this.saveDataToLocalStrorage(this.jsonArrayData);
       //this.savaJsonToFile(retrievedData, 'danhSach.json');
+      this.markAllAsTouched();
+      return;
     }
   }
 }
