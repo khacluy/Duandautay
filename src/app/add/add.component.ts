@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Add } from '../../../model/add.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add',
@@ -12,10 +18,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './add.component.css',
 })
 export class AddComponent implements OnInit {
-
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  jsonArrayData: Add[] = [];
+
+  constructor(private fb: FormBuilder, private router: Router) {
     //fb tạo ra các from control ,addressService lấy dữ liệu
     this.form = this.fb.group({
       // tạo 1 form group chứa một form control
@@ -26,6 +33,14 @@ export class AddComponent implements OnInit {
   ngOnInit(): void {
     const data = this.getDataFromLocalStorage();
     this.jsonArrayData = data ? data : [];
+    // //Check rỗng
+    this.form = this.fb.group({
+      hoTen: ['', Validators.required],
+      ngaySinh: ['', Validators.required],
+      gioiTinh: ['', Validators.required],
+      diaChi: ['', Validators.required],
+      fbWeb: ['', [Validators.required, Validators.pattern('https?://.+')]],
+    });
   }
 
   // Lưu dữ liệu vào localStorage
@@ -33,56 +48,38 @@ export class AddComponent implements OnInit {
     const jsonData = JSON.stringify(data);
     localStorage.setItem('personalData', jsonData);
   }
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> fd66f01409ec6661beb2af5cb9c45a70de1640e3
   //Lấy dữ liệu từ localStorage
-
-  jsonArrayData: Add[] = [];
 
   getDataFromLocalStorage(): Add[] {
     const jsonData = localStorage.getItem('personalData');
     if (jsonData) {
       const parsedData = JSON.parse(jsonData);
-<<<<<<< HEAD
       if (Array.isArray(parsedData)) {
         return parsedData;
       }
-=======
-      if (Array.isArray(parsedData)) { return parsedData;}
->>>>>>> fd66f01409ec6661beb2af5cb9c45a70de1640e3
     }
     return [];
   }
-
-  // Lưu dữ liệu vào file JSON
-  // savaJsonToFile(data: any, fileName: string): void {
-  //   const json = JSON.stringify(data, null, 2);
-  //   const blod = new Blob([json], { type: 'application/json' });
-  //   const url = window.URL.createObjectURL(blod);
-  //   const a = document.createElement('a');
-  //   a.href = url;
-  //   a.download = fileName;
-  //   a.click();
-  //   window.URL.revokeObjectURL(url);
-  // }
   getId(): number {
-    const data = localStorage.getItem('personalData');
+    const data = localStorage.getItem('personalData'); // Lấy dữ liệu từ localStorage
     if (data) {
-      const kq = JSON.parse(data);
-      return kq.length + 1;
+      const parsedData = JSON.parse(data); // Parse dữ liệu JSON
+      if (Array.isArray(parsedData) && parsedData.length > 0) {
+        const lastItem = parsedData[parsedData.length - 1]; // Lấy phần tử cuối cùng
+        return lastItem.id + 1; // Trả về ID mới là ID của phần tử cuối + 1
+      }
     }
-    return 1;
+    return 1; // Nếu không có dữ liệu, trả về ID mặc định là 1
   }
   onSubmit() {
     if (this.form.valid) {
       const formData = {
         id: this.getId(),
         hoTen: (document.getElementById('hoTen') as HTMLInputElement).value,
-        ngaySinh: (document.getElementById('ngaySinh') as HTMLInputElement).value,
-        gioiTinh: (document.getElementById('gioiTinh') as HTMLSelectElement).value,
+        ngaySinh: (document.getElementById('ngaySinh') as HTMLInputElement)
+          .value,
+        gioiTinh: (document.getElementById('gioiTinh') as HTMLSelectElement)
+          .value,
         diaChi: (document.getElementById('diaChi') as HTMLSelectElement).value,
         fbWeb: (document.getElementById('fbWeb') as HTMLInputElement).value,
       };
@@ -90,8 +87,9 @@ export class AddComponent implements OnInit {
       this.saveDataToLocalStrorage(this.jsonArrayData);
       console.log('Retrieved Data:', this.jsonArrayData);
       this.saveDataToLocalStrorage(this.jsonArrayData);
-      //this.savaJsonToFile(retrievedData, 'danhSach.json');
+      alert(`Thêm thành công rồi nhé!`);
+      this.router.navigate(['display']);
+      // setTimeout(() => this.router.navigate(['display']), 0);
     }
   }
 }
-

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Router } from '@angular/router'; // Import Router để điều hướng
 @Component({
   selector: 'app-display',
@@ -9,6 +9,8 @@ import { Router } from '@angular/router'; // Import Router để điều hướn
 })
 export class DisplayComponent {
   personalData: any[] = [];
+  searchResul: any[] = [];
+  deleteresul: any[] = [];
   constructor(private router: Router) {}
   ngOnInit() {
     this.loadData();
@@ -17,6 +19,7 @@ export class DisplayComponent {
   loadData() {
     const data = localStorage.getItem('personalData');
     this.personalData = data ? JSON.parse(data) : [];
+    this.searchResul = this.personalData;
   }
 
   // Xóa một item theo ID
@@ -26,9 +29,21 @@ export class DisplayComponent {
         (person) => person.id !== id
       );
       localStorage.setItem('personalData', JSON.stringify(this.personalData));
+
+      this.searchResul = this.personalData;
     }
   }
-  goToEditComponent() {
-    this.router.navigate(['/edit']); // Điều hướng đến route '/edit'
+  goToEditComponent(id: number) {
+    //this.router.navigate(['/edit'], { queryParams: { id: id } });
+    this.router.navigate(['/edit', id]);
+  }
+  TimKiem(ten: string) {
+    if (ten.trim()) {
+      this.searchResul = this.personalData.filter((person: any) =>
+        person.hoTen.toLowerCase().includes(ten.toLowerCase())
+      );
+    } else {
+      this.searchResul = this.personalData; // Nếu không có từ khóa tìm kiếm, hiển thị toàn bộ dữ liệu
+    }
   }
 }

@@ -17,7 +17,16 @@
       <!-- <button (click)="loadData()" class="btn btn-primary">
         Thêm Dữ Liệu Demo
       </button> -->
-
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Search.."
+          name="search"
+          #searchInput
+          required
+        />
+        <button (click)="TimKiem(searchInput.value)">Tìm</button>
+      </div>
       <table class="table table-bordered table-striped mt-4">
         <thead>
           <tr>
@@ -31,15 +40,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngIf="personalData.length === 0">
+          <tr *ngIf="searchResul.length === 0">
             <td colspan="7" class="text-center">
               Không có dữ liệu để hiển thị
             </td>
           </tr>
-          <tr *ngFor="let person of personalData">
+          <tr *ngFor="let person of searchResul">
             <td>{{ person.id }}</td>
             <td>{{ person.hoTen }}</td>
-            <td>{{ person.ngaySinh }}</td>
+            <td>{{ person.ngaySinh | date:'dd/MM/yyyy' }}</td>
             <td>{{ person.gioiTinh }}</td>
             <td>{{ person.diaChi }}</td>
             <td>
@@ -52,7 +61,12 @@
               >
                 Xóa
               </button>
-              <button class="btn btn-danger btn-sm" (click)="goToEditComponent()">Sửa</button>             
+              <button
+                class="btn btn-danger btn-sm"
+                (click)="goToEditComponent(person.id)"
+              >
+                Sửa
+              </button>
             </td>
           </tr>
         </tbody>

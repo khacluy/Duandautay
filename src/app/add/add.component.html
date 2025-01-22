@@ -9,35 +9,69 @@
     <div class="container">
       <h1>Nhập thông tin cá nhân</h1>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <!-- <div class="form-group">
+          <label for="id">ID:</label>
+          <input type="number" id="id" formControlName="id" />
+          <div *ngIf="form.get('id')?.invalid && form.get('id')?.touched">
+            <small class="text-danger">ID là bắt buộc.</small>
+          </div>
+        </div> -->
+
         <div class="form-group">
           <label for="hoTen">Họ tên:</label>
-          <input type="text" id="hoTen" name="hoTen" required />
+          <input type="text" id="hoTen" formControlName="hoTen" />
+          <div *ngIf="form.get('hoTen')?.invalid && form.get('hoTen')?.touched">
+            <small class="text-danger">Họ tên là bắt buộc.</small>
+          </div>
         </div>
+
         <div class="form-group">
           <label for="ngaySinh">Ngày sinh:</label>
-          <input type="date" id="ngaySinh" name="ngaySinh" required />
+          <input type="date" id="ngaySinh" formControlName="ngaySinh" />
+          <div
+            *ngIf="
+              form.get('ngaySinh')?.invalid && form.get('ngaySinh')?.touched
+            "
+          >
+            <small class="text-danger">Ngày sinh là bắt buộc.</small>
+          </div>
         </div>
+
         <div class="form-group">
           <label for="gioiTinh">Giới tính:</label>
-          <select id="gioiTinh" name="gioiTinh" required>
-            <option value="Nam" selected>Nam</option>
+          <select id="gioiTinh" formControlName="gioiTinh">
+            <option value="Nam">Nam</option>
             <option value="Nữ">Nữ</option>
             <option value="Khác">Khác</option>
           </select>
+          <!-- <div *ngIf="form.get('gioiTinh').invalid && form.get('gioiTinh').touched">
+            <small class="text-danger">Giới tính là bắt buộc.</small>
+          </div> -->
         </div>
+
         <div class="form-group">
           <label for="diaChi">Địa Chỉ:</label>
-          <select id="diaChi" name="diaChi" required>
-            <option value="Hà Nội" selected>Hà Nội</option>
+          <select id="diaChi" formControlName="diaChi">
+            <option value="Hà Nội">Hà Nội</option>
             <option value="Nam Định">Nam Định</option>
             <option value="Thái Bình">Thái Bình</option>
           </select>
+          <!-- <div *ngIf="form.get('diaChi').invalid && form.get('diaChi').touched">
+            <small class="text-danger">Địa chỉ là bắt buộc.</small>
+          </div> -->
         </div>
+
         <div class="form-group">
           <label for="fbWeb">Facebook/Trang web cá nhân:</label>
-          <input type="url" id="fbWeb" name="fbWeb" required />
+          <input type="url" id="fbWeb" formControlName="fbWeb" />
+          <!-- <div *ngIf="form.get('fbWeb').invalid && form.get('fbWeb').touched">
+            <small class="text-danger">
+              {{ form.get('fbWeb').hasError('required') ? 'Liên kết là bắt buộc.' : 'Liên kết không hợp lệ.' }}
+            </small>
+          </div> -->
         </div>
-        <button type="submit">Gửi</button>
+
+        <button type="submit" [disabled]="form.invalid">Gửi</button>
       </form>
     </div>
   </body>
