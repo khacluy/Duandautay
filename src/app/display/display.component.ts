@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { Router } from '@angular/router'; // Import Router để điều hướng
+import { Router } from '@angular/router';
+import { HomeComponent } from "../home/home.component"; // Import Router để điều hướng
 @Component({
   selector: 'app-display',
-  imports: [CommonModule],
+  imports: [CommonModule, HomeComponent],
   templateUrl: './display.component.html',
   styleUrl: './display.component.css',
 })

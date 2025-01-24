@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -38,9 +38,11 @@ export class LoginComponent implements OnInit {
         username === environment.username &&
         password === environment.password
       ) {
+        localStorage.setItem('isLoggedIn', 'true'); // Lưu trạng thái đăng nhập
         console.log('Đăng nhập thành công');
         this.router.navigate(['/display']);
       } else {
+        
         alert('Tên đăng nhập hoặc mật khẩu không đúng');
         // Hiển thị thông báo lỗi cho người dùng
       }

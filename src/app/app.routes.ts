@@ -3,10 +3,12 @@ import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
 import { DisplayComponent } from './display/display.component';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
   { path: 'add', component: AddComponent },
   { path: 'edit/:id', component: EditComponent },
+  { path: 'home', component: HomeComponent },
   // { path: '', redirectTo: 'display', pathMatch: 'full' }, // Route mặc định chuyển hướng đến 'display'
   { path: 'display', component: DisplayComponent }, // Route hiển thị DisplayComponent
   { path: 'login', component: LoginComponent },

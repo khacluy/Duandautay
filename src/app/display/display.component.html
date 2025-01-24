@@ -1,76 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Quản lý dữ liệu</h1>
-      <!-- <button (click)="loadData()" class="btn btn-primary">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <title>Document</title>
+</head>
+
+<body>
+  <app-home></app-home>
+  <div class="container">
+    <h1>Quản lý dữ liệu</h1>
+    <!-- <button (click)="loadData()" class="btn btn-primary">
         Thêm Dữ Liệu Demo
       </button> -->
-      <div class="search-container">
-        <input
-          type="text"
-          placeholder="Search.."
-          name="search"
-          #searchInput
-          required
-        />
-        <button (click)="TimKiem(searchInput.value)">Tìm</button>
-      </div>
-      <table class="table table-bordered table-striped mt-4">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Họ Tên</th>
-            <th>Ngày Sinh</th>
-            <th>Giới Tính</th>
-            <th>Địa Chỉ</th>
-            <th>Facebook/Web</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngIf="searchResul.length === 0">
-            <td colspan="7" class="text-center">
-              Không có dữ liệu để hiển thị
-            </td>
-          </tr>
-          <tr *ngFor="let person of searchResul">
-            <td>{{ person.id }}</td>
-            <td>{{ person.hoTen }}</td>
-            <td>{{ person.ngaySinh | date:'dd/MM/yyyy' }}</td>
-            <td>{{ person.gioiTinh }}</td>
-            <td>{{ person.diaChi }}</td>
-            <td>
-              <a [href]="person.fbWeb" target="_blank">{{ person.fbWeb }}</a>
-            </td>
-            <td>
-              <button
-                class="btn btn-danger btn-sm"
-                (click)="deleteData(person.id)"
-              >
-                Xóa
-              </button>
-              <button
-                class="btn btn-danger btn-sm"
-                (click)="goToEditComponent(person.id)"
-              >
-                Sửa
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="search-container">
+      <input type="text" placeholder="Search.." name="search" #searchInput required />
+      <button (click)="TimKiem(searchInput.value)">Tìm</button>
     </div>
-  </body>
+    <table class="table table-bordered table-striped mt-4">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Họ Tên</th>
+          <th>Ngày Sinh</th>
+          <th>CCCD</th>
+          <th>Giới Tính</th>
+          <th>Địa Chỉ</th>
+          <th>Facebook/Web</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="searchResul.length === 0">
+          <td colspan="7" class="text-center">
+            Không có dữ liệu để hiển thị
+          </td>
+        </tr>
+        <tr *ngFor="let person of searchResul">
+          <td>{{ person.id }}</td>
+          <td>{{ person.hoTen }}</td>
+          <td>{{ person.ngaySinh | date : "dd/MM/yyyy" }}</td>
+          <td>{{ person.cccd }}</td>
+          <td>{{ person.gioiTinh }}</td>
+          <td>{{ person.diaChi }}</td>
+          <td>
+            <a [href]="person.fbWeb" target="_blank">{{ person.fbWeb }}</a>
+          </td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="deleteData(person.id)">
+              Xóa
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="goToEditComponent(person.id)">
+              Sửa
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
 </html>

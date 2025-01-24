@@ -8,6 +8,7 @@
   </head>
 
   <body>
+    <app-home></app-home>
     <div class="container">
       <h1>Chỉnh sửa thông tin cá nhân</h1>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -16,6 +17,9 @@
 
         <label for="ngaySinh">Ngày Sinh:</label>
         <input id="ngaySinh" formControlName="ngaySinh" type="date" />
+
+        <label for="cccd">CCCD:</label>
+        <input id="cccd" formControlName="cccd" type="text" />
 
         <label for="gioiTinh">Giới Tính:</label>
         <select id="gioiTinh" formControlName="gioiTinh">

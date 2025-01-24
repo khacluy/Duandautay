@@ -8,10 +8,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { Add } from '../../../model/add.model';
+import { HomeComponent } from "../home/home.component";
 
 @Component({
   selector: 'app-edit',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, HomeComponent],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.css',
 })
@@ -52,6 +53,7 @@ export class EditComponent implements OnInit {
           id: ['', Validators.required],
           hoTen: ['', Validators.required],
           ngaySinh: ['', Validators.required],
+          cccd: ['', Validators.required],
           gioiTinh: ['', Validators.required],
           diaChi: ['', Validators.required],
           fbWeb: ['', [Validators.required, Validators.pattern('https?://.+')]],

@@ -1,78 +1,101 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nhập thông tin cá nhân</title>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Nhập thông tin cá nhân</h1>
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <!-- <div class="form-group">
-          <label for="id">ID:</label>
-          <input type="number" id="id" formControlName="id" />
-          <div *ngIf="form.get('id')?.invalid && form.get('id')?.touched">
-            <small class="text-danger">ID là bắt buộc.</small>
-          </div>
-        </div> -->
 
-        <div class="form-group">
-          <label for="hoTen">Họ tên:</label>
-          <input type="text" id="hoTen" formControlName="hoTen" />
-          <div *ngIf="form.get('hoTen')?.invalid && form.get('hoTen')?.touched">
-            <small class="text-danger">Họ tên là bắt buộc.</small>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nhập thông tin cá nhân</title>
+</head>
+
+<body>
+  <app-home></app-home>
+  <div class="container">
+    <h1>Nhập thông tin cá nhân</h1>
+    <form [formGroup]="form">
+      <div class="form-group">
+        <label for="hoTen">Họ tên:</label>
+        <input type="text" id="hoTen" formControlName="hoTen" />
+        <div class="message-required" *ngIf="submitted && f.hoTen.errors" nzSize="large">
+          <div *ngIf="f.hoTen.errors">
+            <!-- <i nz-icon nzType="close-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'#FF0000'"></i> -->
+            <small class="text-danger">&nbsp;Họ tên là bắt buộc.</small>
           </div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="ngaySinh">Ngày sinh:</label>
-          <input type="date" id="ngaySinh" formControlName="ngaySinh" />
-          <div
-            *ngIf="
-              form.get('ngaySinh')?.invalid && form.get('ngaySinh')?.touched
-            "
-          >
-            <small class="text-danger">Ngày sinh là bắt buộc.</small>
+      <div class="form-group">
+        <label for="ngaySinh">Ngày sinh:</label>
+        <input type="date" id="ngaySinh" formControlName="ngaySinh" />
+        <div class="message-required" *ngIf="submitted && f.ngaySinh.errors" nzSize="large">
+          <div *ngIf="f.ngaySinh">
+            <!-- <i nz-icon nzType="close-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'#FF0000'"></i> -->
+            <small class="text-danger">&nbsp;Ngày sinh là bắt buộc.</small>
           </div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="gioiTinh">Giới tính:</label>
-          <select id="gioiTinh" formControlName="gioiTinh">
-            <option value="Nam">Nam</option>
-            <option value="Nữ">Nữ</option>
-            <option value="Khác">Khác</option>
-          </select>
-          <!-- <div *ngIf="form.get('gioiTinh').invalid && form.get('gioiTinh').touched">
-            <small class="text-danger">Giới tính là bắt buộc.</small>
-          </div> -->
+      <div class="form-group">
+        <label for="cccd">CCCD:</label>
+        <input type="text" id="cccd" formControlName="cccd" />
+        <div class="message-required" *ngIf="submitted && f.cccd.errors" nzSize="large">
+          <div *ngIf=" f.cccd.errors.required || f.cccd.errors.pattern || f.cccd.errors.minlength || f.cccd.errors.maxlength">
+            <!-- <i nz-icon nzType="close-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'#FF0000'"></i> -->
+            <small class="text-danger">&nbsp;Số CMND không hợp lệ.</small>
+          </div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="diaChi">Địa Chỉ:</label>
-          <select id="diaChi" formControlName="diaChi">
-            <option value="Hà Nội">Hà Nội</option>
-            <option value="Nam Định">Nam Định</option>
-            <option value="Thái Bình">Thái Bình</option>
-          </select>
-          <!-- <div *ngIf="form.get('diaChi').invalid && form.get('diaChi').touched">
+      <div class="form-group">
+        <label for="gioiTinh">Giới tính:</label>
+        <select id="gioiTinh" formControlName="gioiTinh">
+          <option value="Nam">Nam</option>
+          <option value="Nữ">Nữ</option>
+          <option value="Khác">Khác</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="diaChi">Địa Chỉ:</label>
+        <select id="diaChi" formControlName="diaChi">
+          <option value="Hà Nội">Hà Nội</option>
+          <option value="Nam Định">Nam Định</option>
+          <option value="Thái Bình">Thái Bình</option>
+        </select>
+        <!-- <div *ngIf="form.get('diaChi').invalid && form.get('diaChi').touched">
             <small class="text-danger">Địa chỉ là bắt buộc.</small>
           </div> -->
-        </div>
+      </div>
 
+      <!-- <div class="form-group">
+          <label for="province">Tỉnh:</label>
+          <select id="province" formControlName="province">
+            <option *ngFor="let p of provinces" [value]="p.Name">{{ p.Name }}</option>
+          </select>
+        </div>
+    
         <div class="form-group">
-          <label for="fbWeb">Facebook/Trang web cá nhân:</label>
-          <input type="url" id="fbWeb" formControlName="fbWeb" />
-          <!-- <div *ngIf="form.get('fbWeb').invalid && form.get('fbWeb').touched">
-            <small class="text-danger">
-              {{ form.get('fbWeb').hasError('required') ? 'Liên kết là bắt buộc.' : 'Liên kết không hợp lệ.' }}
-            </small>
-          </div> -->
+          <label for="district">Huyện:</label>
+          <select id="district" formControlName="district">
+            <option *ngFor="let d of districts" [value]="d.Name">{{ d.Name }}</option>
+          </select>
         </div>
+    
+        <div class="form-group">
+          <label for="ward">Xã:</label>
+          <select id="ward" formControlName="ward">
+            <option *ngFor="let w of wards" [value]="w.Name">{{ w.Name }}</option>
+          </select>
+        </div> -->
 
-        <button type="submit" [disabled]="form.invalid">Gửi</button>
-      </form>
-    </div>
-  </body>
+      <div class="form-group">
+        <label for="fbWeb">Facebook/Trang web cá nhân:</label>
+        <input type="url" id="fbWeb" formControlName="fbWeb" />
+      </div>
+
+      <!-- <button type="submit" [disabled]="form.invalid">Gửi</button> -->
+      <button type="submit" (click)="add()">Gửi</button>
+    </form>
+  </div>
+</body>
+
 </html>
